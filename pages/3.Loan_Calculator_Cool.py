@@ -4,9 +4,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 
-st.title("Loan Repayments Calculator")
+st.title("Loan Repayments Calculator",anchor=False)
 
-st.write("### Input Data")
+st.write("### Input Data 1233")
+
 col1, col2 = st.columns(2)
 home_value = col1.number_input("Loan Value", min_value=0, value=500000)
 deposit = col1.number_input("Down Payment", min_value=0, value=100000)
@@ -27,7 +28,7 @@ monthly_payment = (
 total_payments = monthly_payment * number_of_payments
 total_interest = total_payments - loan_amount
 
-st.write("### Repayments")
+st.write("### Repayments",anchor=False)
 col1, col2, col3 = st.columns(3)
 col1.metric(label="Monthly Repayments", value=f"Rs:{monthly_payment:,.2f}")
 col2.metric(label="Total Repayments", value=f"Rs:{total_payments:,.0f}")
