@@ -85,8 +85,12 @@ with col2:
 #st.write("### Input Data")
 st.subheader("Input Data", anchor=False)
 vApiPrompt ="Write Test cases in a table format for API Testing for the following Sample Request and Resposne \n"
-vTextareaRequest=st.text_area("Request")
-vTextareaResponse=st.text_area("Response")
+if "request_text" not in st.session_state:
+    st.session_state["request_text"] = ""
+if "response_text" not in st.session_state:
+    st.session_state["response_text"] = ""
+vTextareaRequest = st.text_area("Request", key="request_text")
+vTextareaResponse = st.text_area("Response", key="response_text")
 vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
 vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
 vApiPrompt=vApiPrompt+  vTextareaRequest +vTextareaResponse
@@ -140,6 +144,8 @@ if prompt := b :
     st.write(prompt2)
     #end added by Nilesh
     st.session_state.messages2.append({"role": "user", "content": prompt2})
+
+    
 # if prompt:=c:
 #    #if st.session_state.selected_model != model_option:
 #     sxt.session_state.messages = []
@@ -189,3 +195,11 @@ if prompt := b :
         st.session_state.messages2.append(
             {"role": "assistant", "content": combined_response})
 
+if c:
+    st.rerun()
+    st.session_state.messages = []
+    st.session_state.messages2 = []
+    st.session_state["request_text"] = ""
+    st.session_state["response_text"] = ""
+    vApiPrompt = ""
+    st.write("Session Cleared")
