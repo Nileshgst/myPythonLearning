@@ -189,13 +189,54 @@ with col3:
 if prompt := b :
 
     #rompt2 = "Context: "+"\nQuery: "+prompt+"\nTask: Answer Query in Detail"
-    prompt2 = "Context: "+"\nQuery: "+"\nTask: Answer Query in Detail"
+    # prompt2 = "Context: "+"\nQuery: "+"\nTask: Answer Query in Detail"
     #added by Nilesh
     #prompt2 = "Context: "+"\nQuery: "+concatenated_text+"\nTask: Answer Query in Detail"
     prompt2 = "Context: "+"\nQuery: "+concatenated_text_manual+"\nTask: Answer Query in Detail"
+    prompt2 = "Query: "+concatenated_text_manual+" Task: Answer Query with sufficient examples and in Detail"
     st.write(prompt2)
     #end added by Nilesh
     st.session_state.messages2.append({"role": "user", "content": prompt2})
+
+    with st.chat_message("user", avatar='👨‍💻'):
+             st.markdown(prompt)
+           #st.markdown(concatenated_text)
+    # Fetch response from Groq API
+    try:
+        chat_completion = client.chat.completions.create(
+            model=model_option,
+            messages=[
+                {
+                    "role": m["role"],
+                    "content": m["content"]
+                }
+                for m in st.session_state.messages2
+            ],
+            max_tokens=max_tokens,
+            stream=True
+        )
+
+        # Use the generator function with st.write_stream
+        with st.chat_message("assistant", avatar="🤖"):
+            chat_responses_generator = generate_chat_responses(chat_completion)
+            full_response = st.write_stream(chat_responses_generator)
+    except Exception as e:
+        st.error(e, icon="🚨")
+
+    # Append the full response to session_state.messages
+    if isinstance(full_response, str):
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response})
+        st.session_state.messages2.append(
+            {"role": "assistant", "content": full_response})
+    else:
+        # Handle the case where full_response is not a string
+        combined_response = "\n".join(str(item) for item in full_response)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": combined_response})
+        st.session_state.messages2.append(
+            {"role": "assistant", "content": combined_response})
+
 
 
 if prompt:=d:
