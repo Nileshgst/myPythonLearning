@@ -84,7 +84,7 @@ with col2:
 #Nilesh code
 
 st.write("### Input Data")
-col1,col2,col3 = st.columns(3)
+col1,col2,col3,col4 = st.columns(4)
 #VTextBoxesCount= col1.text_input("Text box")
 VTextBoxesCount = col1.number_input("Text box", min_value=0, value=50)
 VTextBoxesCount=str(VTextBoxesCount)

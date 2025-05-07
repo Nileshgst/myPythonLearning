@@ -6,10 +6,14 @@ st.set_page_config(page_icon="💬", layout="wide",
                    page_title="Chatbot using Groq ...")
 
 def clear_text(): # this is the function you define (def is a Python keyword and is short for 'define')
-  st.session_state["request_text"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
-  st.session_state["response_text"] = ''  
-  st.session_state.messages = []
-  st.session_state.messages2 = [] 
+    st.session_state["Textbox1"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
+    st.session_state["Textbox2"] = '' 
+    st.session_state["Textbox3"] = '' 
+    st.session_state["Textbox4"] = '' 
+    st.session_state["Textbox5"] = '' 
+    st.session_state["Textbox6"] = '' 
+st.session_state.messages = []
+st.session_state.messages2 = [] 
 
 def display_heading(heading_text):
   """Displays the given text as a heading Testing Nilesh."""
@@ -32,7 +36,7 @@ icon("💽")
 #display_heading("Nilesh's Page")
 
 #st.subheader("Nilesh's Groq Chat Streamlit App Testing", divider="rainbow", anchor=False)
-st.subheader("Nilesh's Chatbot App Testing", divider="blue",anchor=False)
+st.subheader("Nilesh's Chatbot for Functional Testing", divider="blue",anchor=False)
 client = Groq(
     api_key=st.secrets["GROQ_API_KEY"],
 )
@@ -88,18 +92,55 @@ with col2:
 #Nilesh code
 #st.write("### Input Data")
 st.subheader("Input Data", anchor=False)
-vApiPrompt ="Write Test cases in a table format for API Testing for the following Sample Request and Resposne \n"
+#vApiPrompt ="Write Test cases in a table format for API Testing for the following Sample Request and Resposne \n"
+
+# concatenated_text="Write Testcase for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"+ VListBoxCount +" List Boxes," +VRadioBoxCount+" Radio Buttons,"+ VButtonCount_OK +" OK Button," + VButtonCount_Cancel+" Cancel Button"
+
+# st.write(concatenated_text)
 if "request_text" not in st.session_state:
     st.session_state["request_text"] = ""
 if "response_text" not in st.session_state:
     st.session_state["response_text"] = ""
 
-vTextareaRequest = st.text_area("Request", key="request_text")
-vTextareaResponse = st.text_area("Response", key="response_text")
-vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
-vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
-vApiPrompt=vApiPrompt+  vTextareaRequest +vTextareaResponse
-st.write(vApiPrompt)
+
+#Nilesh code
+
+#st.write("### Input Data Functional Testing")
+col1,col2,col3,col4,col5 = st.columns(5)
+VTextBoxesCount= col1.text_input("Text box", max_chars=2,key="Textbox1")
+VCheckBoxesCount = col2.text_input("CheckBox",max_chars=1,key="Textbox2")
+VListBoxCount = col3.text_input("Listbox",max_chars=1,key="Textbox3")
+VRadioBoxCount = col4.text_input("RadioButton",max_chars=1,key="Textbox4")
+VButtonCount_OK= col1.text_input("OK Button",max_chars=1,key="Textbox5")
+VButtonCount_Cancel = col2.text_input("Cancel Button",max_chars=1,key="Textbox6")
+
+
+
+# VTextBoxesCountStr= col1.text_input("Text box2")
+#VTextBoxesCount = col1.number_input("Text box", min_value=0, value=50,key="Textbox" )
+#VTextBoxesCount=str(VTextBoxesCount)
+#VTextBoxesCount = col1.number_input("Text box",key="Textbox" )
+#VTextBoxesCount= col1.number_input("Text box", key= "Textbox2")
+# VRadioBoxCount = str(col4.number_input("RadioButton",min_value=0,max_value=5))
+#VListBoxCount = col1.text_input("Listbox")
+#VRadioBoxCount = col2.text_input("RadioButton")
+# VButtonCount_OK= str(col1.number_input("OK Button",min_value=0,max_value=5))
+# VButtonCount_Cancel = str(col2.number_input("Cancel Button",min_value=0,max_value=5))
+#VTextBoxesCountStr= col1.text_input("Text box2")
+
+#concatenated_text="Write Testcase for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"
+concatenated_text_manual="Write Manual Testcase for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"+ VListBoxCount +" List Boxes," +VRadioBoxCount+" Radio Buttons,"+ VButtonCount_OK +" OK Button," + VButtonCount_Cancel+" Cancel Button"
+concatenated_text_selenium="Write Selenium Automation script for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"+ VListBoxCount +" List Boxes," +VRadioBoxCount+" Radio Buttons,"+ VButtonCount_OK +" OK Button," + VButtonCount_Cancel+" Cancel Button"
+st.write("contacted text is" +concatenated_text_manual)
+
+#End Nilesh Code
+
+# vTextareaRequest = st.text_area("Request", key="request_text")
+# vTextareaResponse = st.text_area("Response", key="response_text")
+# vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
+# vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
+# vApiPrompt=vApiPrompt+  vTextareaRequest +vTextareaResponse
+# st.write(vApiPrompt)
 
 
 # col1,col2,col3 = st.columns(3)
@@ -109,11 +150,7 @@ st.write(vApiPrompt)
 # #VTextBoxesCount= col1.text_input("Text box")
 # VCheckBoxesCount = str(col1.number_input("CheckBox",min_value=0, value=5))
 
-# VListBoxCount = col1.text_input("Listbox")
-# VRadioBoxCount = col2.text_input("RadioButton")
-# VButtonCount_OK= col2.text_input("OK Button")
-# VButtonCount_Cancel = col2.text_input("Cancel Button")
-# VTextBoxesCountStr= col1.text_input("Text box2")
+
 
 #concatenated_text="Write Testcase for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"
 #concatenated_text="Write Testcase for "+ VTextBoxesCount+" TextBoxes, "+VCheckBoxesCount+" Check boxes,"+ VListBoxCount +" List Boxes," +VRadioBoxCount+" Radio Buttons,"+ VButtonCount_OK +" OK Button," + VButtonCount_Cancel+" Cancel Button"
@@ -138,8 +175,16 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
 # st.button("Clear text", on_click=clear_text)
 
 #if prompt := st.chat_input("Enter your prompt here..."):
-b=st.button("Generate Test case")
-c=st.button("Clear Session", on_click=clear_text)
+
+col1, col2,col3 =st.columns(3)
+with col1:
+    b=st.button("Generate Test case")
+with col2:
+    d=st.button("Selenium Automation Test cases")
+
+with col3:
+    c=st.button("Clear Session", on_click=clear_text)
+
 
 if prompt := b :
 
@@ -147,12 +192,22 @@ if prompt := b :
     prompt2 = "Context: "+"\nQuery: "+"\nTask: Answer Query in Detail"
     #added by Nilesh
     #prompt2 = "Context: "+"\nQuery: "+concatenated_text+"\nTask: Answer Query in Detail"
-    prompt2 = "Context: "+"\nQuery: "+vApiPrompt+"\nTask: Answer Query in Detail"
+    prompt2 = "Context: "+"\nQuery: "+concatenated_text_manual+"\nTask: Answer Query in Detail"
     st.write(prompt2)
     #end added by Nilesh
     st.session_state.messages2.append({"role": "user", "content": prompt2})
 
-    
+
+if prompt:=d:
+    prompt2 = "Context: "+"\nQuery: "+"\nTask: Answer Query in Detail"
+    #added by Nilesh
+    #prompt2 = "Context: "+"\nQuery: "+concatenated_text+"\nTask: Answer Query in Detail"
+    prompt2 = "Context: "+"\nQuery: "+concatenated_text_selenium+"\nTask: Answer Query in Detail"
+    st.write(prompt2)
+    #end added by Nilesh
+    st.session_state.messages2.append({"role": "user", "content": prompt2})
+
+
 # if prompt:=c:
 #    #if st.session_state.selected_model != model_option:
 #     sxt.session_state.messages = []
@@ -202,16 +257,3 @@ if prompt := b :
         st.session_state.messages2.append(
             {"role": "assistant", "content": combined_response})
 
-# if c:
-#     st.rerun()
-#     #st.session_state.messages = []
-#     #st.session_state.messages2 = []
-#     # st.session_state["request_text"]=""
-#     # st.session_state["response_text"] = ""
-#     # st.session_state["request_text"] = ''
-#     #("Clear text", on_click=clear_text)
-
-#     #st.text_area("Request")=""
-
-#     st.write("API prompt is ",vApiPrompt = "")
-#     st.write("Session Cleared")

@@ -3,7 +3,7 @@ from typing import Generator
 from groq import Groq
 
 st.set_page_config(page_icon="💬", layout="wide",
-                   page_title="Chatbot using Database Testing ...")
+                   page_title="Chatbot using Groq ...")
 
 def clear_text(): # this is the function you define (def is a Python keyword and is short for 'define')
   st.session_state["request_text"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
@@ -32,7 +32,7 @@ icon("💽")
 #display_heading("Nilesh's Page")
 
 #st.subheader("Nilesh's Groq Chat Streamlit App Testing", divider="rainbow", anchor=False)
-st.subheader("Nilesh's Chat Bot for Database Testing", divider="blue",anchor=False)
+st.subheader("Nilesh's Chatbot API Testing", divider="blue",anchor=False)
 client = Groq(
     api_key=st.secrets["GROQ_API_KEY"],
 )
@@ -88,12 +88,17 @@ with col2:
 #Nilesh code
 #st.write("### Input Data")
 st.subheader("Input Data", anchor=False)
-vApiPrompt ="Create Sample Test data in a table format for the following Database format \n"
-vTextareaRequest=st.text_area("Enter Database Header in Details",key="request_text")
-#vTextareaResponse=st.text_area("Response")
+vApiPrompt ="Write Test cases in a table format for API Testing for the following Sample Request and Resposne \n"
+if "request_text" not in st.session_state:
+    st.session_state["request_text"] = ""
+if "response_text" not in st.session_state:
+    st.session_state["response_text"] = ""
+
+vTextareaRequest = st.text_area("Request", key="request_text")
+vTextareaResponse = st.text_area("Response", key="response_text")
 vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
-#vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
-vApiPrompt=vApiPrompt+  vTextareaRequest 
+vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
+vApiPrompt=vApiPrompt+  vTextareaRequest +vTextareaResponse
 st.write(vApiPrompt)
 
 
@@ -129,11 +134,13 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
         if chunk.choices[0].delta.content:
             yield chunk.choices[0].delta.content
 
-
+#To clear text area
+# st.button("Clear text", on_click=clear_text)
 
 #if prompt := st.chat_input("Enter your prompt here..."):
 b=st.button("Generate Test case")
-c=st.button("Clear Session",on_click=clear_text)
+c=st.button("Clear Session", on_click=clear_text)
+
 if prompt := b :
 
     #rompt2 = "Context: "+"\nQuery: "+prompt+"\nTask: Answer Query in Detail"
@@ -144,6 +151,8 @@ if prompt := b :
     st.write(prompt2)
     #end added by Nilesh
     st.session_state.messages2.append({"role": "user", "content": prompt2})
+
+    
 # if prompt:=c:
 #    #if st.session_state.selected_model != model_option:
 #     sxt.session_state.messages = []
@@ -193,3 +202,16 @@ if prompt := b :
         st.session_state.messages2.append(
             {"role": "assistant", "content": combined_response})
 
+# if c:
+#     st.rerun()
+#     #st.session_state.messages = []
+#     #st.session_state.messages2 = []
+#     # st.session_state["request_text"]=""
+#     # st.session_state["response_text"] = ""
+#     # st.session_state["request_text"] = ''
+#     #("Clear text", on_click=clear_text)
+
+#     #st.text_area("Request")=""
+
+#     st.write("API prompt is ",vApiPrompt = "")
+#     st.write("Session Cleared")
