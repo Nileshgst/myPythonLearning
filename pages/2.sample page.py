@@ -5,15 +5,17 @@ import pandas as pd
 import os
 from io import BytesIO
 
+def clear_text(): # this is the function you define (def is a Python keyword and is short for 'define')
+  st.session_state["TextBox"]=''
+  st.session_state["2"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
+
 #Set up our app
 st.set_page_config(page_title="💽 Data Sweeper",layout="wide")
 
-
 st.write ( "Sample testing")
-  
 
 #st.write("Button not Pressed")
-x=st.text_input("Favourite color")
+x=st.text_input("Favourite color",key="TextBox")
 st.write(f"your Favorite color is:{x}")
 V_Textbox=st.text_input("No.of Text boxes")
 
@@ -25,8 +27,10 @@ if b:
     st.write("Button Pressed")
     st.write(f"Your colour is: {x}")
     st.write("You did it")
+    
 
-
+st.text_area("Text Area Nilesh",key=2)
+#vTextareaRequest = st.text_area("Request", key="request_text")
 #Nilesh code
 
 st.write("### Input Data")
@@ -69,7 +73,13 @@ button_a = st.button('a', key='but_a', on_click=disable, args=(False,))
 button_b = st.button('b', key='but_b', on_click=disable, args=(True,))
 button_c = st.button('c', key='but_c', disabled=st.session_state.get("disabled", False))
 button_d = st.button('d', key='but_d', on_click=disable, args=(False,))
+
+
+st.button("Clear text", on_click=clear_text)
+
+
 if button_d:
    
     st.write("Button C Pressed")
+    
    #button_c=st.session_state.get("disabled", True)

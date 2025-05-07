@@ -5,7 +5,11 @@ from groq import Groq
 st.set_page_config(page_icon="💬", layout="wide",
                    page_title="Chatbot using Database Testing ...")
 
-
+def clear_text(): # this is the function you define (def is a Python keyword and is short for 'define')
+  st.session_state["request_text"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
+  st.session_state["response_text"] = ''  
+  st.session_state.messages = []
+  st.session_state.messages2 = [] 
 
 def display_heading(heading_text):
   """Displays the given text as a heading Testing Nilesh."""
@@ -85,7 +89,7 @@ with col2:
 #st.write("### Input Data")
 st.subheader("Input Data", anchor=False)
 vApiPrompt ="Create Sample Test data in a table format for the following Database format \n"
-vTextareaRequest=st.text_area("Enter Database Heder Details")
+vTextareaRequest=st.text_area("Enter Database Header in Details",key="request_text")
 #vTextareaResponse=st.text_area("Response")
 vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
 #vTextareaResponse="\n Response is \n"+vTextareaResponse+"\n"
@@ -129,7 +133,7 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
 
 #if prompt := st.chat_input("Enter your prompt here..."):
 b=st.button("Generate Test case")
-c=st.button("Clear Session")
+c=st.button("Clear Session",on_click=clear_text)
 if prompt := b :
 
     #rompt2 = "Context: "+"\nQuery: "+prompt+"\nTask: Answer Query in Detail"

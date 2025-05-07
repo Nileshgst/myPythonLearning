@@ -5,7 +5,11 @@ from groq import Groq
 st.set_page_config(page_icon="💬", layout="wide",
                    page_title="Chatbot using Groq ...")
 
-
+def clear_text(): # this is the function you define (def is a Python keyword and is short for 'define')
+  st.session_state["request_text"] = ''  # add "text" as a key using the square brackets notation and set it to have the value '' 
+  st.session_state["response_text"] = ''  
+  st.session_state.messages = []
+  st.session_state.messages2 = [] 
 
 def display_heading(heading_text):
   """Displays the given text as a heading Testing Nilesh."""
@@ -89,6 +93,7 @@ if "request_text" not in st.session_state:
     st.session_state["request_text"] = ""
 if "response_text" not in st.session_state:
     st.session_state["response_text"] = ""
+
 vTextareaRequest = st.text_area("Request", key="request_text")
 vTextareaResponse = st.text_area("Response", key="response_text")
 vTextareaRequest= "\n Request is \n"+vTextareaRequest+"\n"
@@ -129,11 +134,13 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
         if chunk.choices[0].delta.content:
             yield chunk.choices[0].delta.content
 
-
+#To clear text area
+# st.button("Clear text", on_click=clear_text)
 
 #if prompt := st.chat_input("Enter your prompt here..."):
 b=st.button("Generate Test case")
-c=st.button("Clear Session")
+c=st.button("Clear Session", on_click=clear_text)
+
 if prompt := b :
 
     #rompt2 = "Context: "+"\nQuery: "+prompt+"\nTask: Answer Query in Detail"
@@ -195,11 +202,16 @@ if prompt := b :
         st.session_state.messages2.append(
             {"role": "assistant", "content": combined_response})
 
-if c:
-    st.rerun()
-    st.session_state.messages = []
-    st.session_state.messages2 = []
-    st.session_state["request_text"] = ""
-    st.session_state["response_text"] = ""
-    vApiPrompt = ""
-    st.write("Session Cleared")
+# if c:
+#     st.rerun()
+#     #st.session_state.messages = []
+#     #st.session_state.messages2 = []
+#     # st.session_state["request_text"]=""
+#     # st.session_state["response_text"] = ""
+#     # st.session_state["request_text"] = ''
+#     #("Clear text", on_click=clear_text)
+
+#     #st.text_area("Request")=""
+
+#     st.write("API prompt is ",vApiPrompt = "")
+#     st.write("Session Cleared")
